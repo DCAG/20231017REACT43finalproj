@@ -14,6 +14,7 @@ function Customers() {
       customerId: this.name
     }
     dispatch({type: 'PURCHASE_CREATE', payload: newPurchase})
+    dispatch({type: 'PRODUCT_DEC_QUANTITY', payload: productId})
   }
 
   return (

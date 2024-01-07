@@ -8,7 +8,7 @@ const initStatePurchases = [
 const purchasesReducer = (state = initStatePurchases, action) => {
     switch(action.type){
         case 'PURCHASE_CREATE':
-            return [...state, action.payload]
+            return [...state, {...action.payload, id: uuidv4()}]
         case 'PURCHASE_UPDATE':
             var purchases = [...state]
             var purchaseIdx = purchases.findIndex((purchase) => {return purchase.id === action.payload.id})

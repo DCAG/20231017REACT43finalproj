@@ -16,6 +16,17 @@ const productsReducer = (state = initStateProducts, action) => {
             var productIdx = products.findIndex((product) => {return product.id === action.payload.id})
             products.splice(productIdx,1,action.payload)
             return products;
+        case 'PRODUCT_DEC_QUANTITY':
+            var products = [...state]
+            var productIdx = products.findIndex((product) => {return product.id === action.payload})
+            products[productIdx].quantity-- // what happens when quantity is 0?
+            return products;
+        case 'PRODUCT_INC_QUANTITY':
+            var products = [...state]
+            var productIdx = products.findIndex((product) => {return product.id === action.payload.id})
+            products[productIdx].quantity++
+            //products.splice(productIdx,1,action.payload)
+            return products;
         case 'PRODUCT_DELETE':
             return state.filter((item) => {return item.id != action.payload})
         default:

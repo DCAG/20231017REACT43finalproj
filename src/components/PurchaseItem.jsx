@@ -19,6 +19,7 @@ function PurchaseItem({purchase}) {
       customerId: purchase.customerId
     }
     dispatch({type: 'PURCHASE_CREATE', payload: newPurchase})
+    dispatch({type: 'PRODUCT_DEC_QUANTITY', payload: productId})
   },[purchase.productId])
 
   return (
