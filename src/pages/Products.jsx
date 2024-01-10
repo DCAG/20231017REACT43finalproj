@@ -9,14 +9,17 @@ function Products() {
 
   return (
     <div>
+      <nav>
         <Link to='/'>Back</Link>
-        <h1>Products</h1>
-        <ProductSummary />
-        {
-          products.map((product, index) => {
-            return <ProductItem key={index} product={product} />
-          })
-        }
+      </nav>
+      <h1>Products</h1>
+      <ProductSummary />
+      <h3>Customers who baught this product:</h3>
+      {
+        products.map((product) => {
+          return <ProductItem key={product.id} product={product} />
+        })
+      }
     </div>
   )
 }

@@ -14,6 +14,7 @@ function Purchases() {
 
   const search = () => {
     console.log('Purchases: search')
+    console.log(date)
     console.log(purchases)
     console.log(customerId)
     console.log(productId)
@@ -21,7 +22,7 @@ function Purchases() {
     purchases.filter(p => {
       return (customerId == '' || p.customerId === customerId) &&
       (productId == '' || p.productId === productId) && 
-      (date == '' || p.timestamp === date)
+      (date == '' || p.date === date)
     })
     result = Object.groupBy(result,({customerId}) => customerId)  
     console.log(result)
@@ -38,32 +39,7 @@ function Purchases() {
       Customers: <ComboBox options={customers.map(item => {return {value:item.id, display:item.lastName+' '+item.firstName}})} onChange={(e) => {setCustomerId(e.target.value)}} />
       Purchase Date: <input type='date' onChange={e => setDate(e.target.value)} />
       <button onClick={search}>Search</button>
-      <table>
-        <thead>
-          <tr>
-            <th>customer</th>
-            <th>product</th>
-            <th>timestamp</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            Object.keys(selectedPurchases).map( s => {
-              return selectedPurchases[s].map( (sp,index) => {
-                return (
-                  <tr key={sp.id}>
-                    {
-                    index===0?(<td rowSpan={selectedPurchases[s].length}>{customers.find(c=>c.id===sp.customerId).firstName}</td>):''
-                    }
-                    <td>{products.find(p=>p.id===sp.productId).name}</td>
-                    <td>{sp.timestamp}</td>
-                  </tr>
-                )
-                })
-              })
-          }
-        </tbody>
-      </table>
+      <PurchaseList productId={productId} customerId={customerId} date={date} />
     </div>
   )
 }

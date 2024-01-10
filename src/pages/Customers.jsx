@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import ProductPicker from '../components/ProductPicker'
-import {Link} from 'react-router-dom'
+import {Link, Outlet} from 'react-router-dom'
 
 function Customers() {
   const customers = useSelector(store => store.customers)
@@ -10,17 +10,19 @@ function Customers() {
   const productPickCallback = (e, productId) =>{
     const newPurchase = {
       productId: productId,
-      timestamp: (new Date()).toISOString(),
       customerId: this.name
     }
     dispatch({type: 'PURCHASE_CREATE', payload: newPurchase})
-    dispatch({type: 'PRODUCT_DEC_QUANTITY', payload: productId})
   }
 
   return (
     <div>
+        <nav>
+            <Link to="/">back</Link>
+            <Link to="create">back</Link>
+        </nav>
         <h1>Customers</h1>
-
+        <Outlet />
         <table>
             <thead>
                 <tr>

@@ -6,6 +6,8 @@ import EditCustomer from './pages/EditCustomer'
 import EditProduct from './pages/EditProduct'
 import Purchases from './pages/Purchases'
 import Menu from './pages/Menu'
+import ProductCreate from './pages/ProductCreate'
+import CustomerCreate from './pages/CustomerCreate'
 
 function App() {
 
@@ -13,8 +15,12 @@ function App() {
     <>
     <Routes>
       <Route path='/' element={<Menu />} />
-      <Route path='/products' element={<Products />} />
-      <Route path='/customers' element={<Customers />} />
+      <Route path='/products' element={<Products />}>
+        <Route path='create' element={<ProductCreate />} />
+      </Route>
+      <Route path='/customers' element={<Customers />}>
+        <Route path='create' element={<CustomerCreate />} />
+      </Route>
       <Route path='/purchases' element={<Purchases />} />
       <Route path='/customers/:id' element={<EditCustomer />} />
       <Route path='/products/:id' element={<EditProduct />} />
