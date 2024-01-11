@@ -22,7 +22,7 @@ function PurchaseListItem({purchase}) {
     <div style={{display: 'flex', justifyContent:'space-between', border: "solid 1px", textAlign: 'left'}}>
         <Link to={'/customers/' + customer.id}>{customer.firstName} {customer.lastName}</Link>
         {purchase.date}
-        <ProductPicker buttonShowText='Add' buttonSaveText='Save' pickCallback={productPickCallback} />
+        <ProductPicker style={{width:'10%'}} buttonShowText='Add' buttonSaveText='Save' pickCallback={productPickCallback} />
     </div>
   )
 }

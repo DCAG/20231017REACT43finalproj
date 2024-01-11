@@ -21,3 +21,54 @@
   font-size: 30px;
   flex: 1;
 }
+
+input {
+  padding:2px;
+  margin:2px 0;
+  font-family:inherit;
+  font-size: inherit;
+}
+
+button {
+
+  /* remove default behavior */
+  appearance:none;
+  -webkit-appearance:none;
+
+  /* usual styles */
+  padding:5px;
+  border:none;
+  margin: 1px 1px 1px 1px;
+  font-weight:600;
+  border-radius:5px;
+}
+
+.list-item--row:nth-of-type(odd) {
+  background-color: lightgray;
+}
+
+.list-item--row:nth-of-type(even) {
+  background-color: rgb(176, 238, 245);
+}
+
+.item0 { grid-area: product-name; }
+.item1 { grid-area: price-label; }
+.item2 { grid-area: price-value; }
+.item3 { grid-area: quantity-label; }
+.item4 { grid-area: quantity-value; }
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'product-name product-name product-name'
+    'price-label price-value place-holder'
+    'quantity-label quantity-value place-holder';
+  gap: 2px;
+  padding: 1px;
+  justify-content: left;
+}
+
+.grid-container > div {
+  text-align: left;
+  padding: 1px 0;
+}

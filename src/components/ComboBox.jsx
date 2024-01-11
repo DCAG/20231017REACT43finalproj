@@ -20,9 +20,9 @@ function ComboBox({options, onChange}) {
     <input type="text" list={compUniquId} onChange={(e)=>onChange(e)} />
     <datalist id={compUniquId}>
     {
-        options.map((option, index) => {
-            return <option key={index} value={option.value}>{option.display}</option>  
-        })
+      options.map((option, index) => {
+          return <option key={index} value={option.value}>{option.display}</option> 
+      })
     }
     </datalist>
     </>

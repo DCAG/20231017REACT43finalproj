@@ -13,17 +13,17 @@ function CustomerCreate() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    dispatch('CUSTOMER_CREATE', customer)
+    dispatch({type:'CUSTOMER_CREATE', payload:customer})
   }
 
   return (
     <div>
-        <h1>Create New Customer</h1>
+        <h3>Create New Customer</h3>
 
         <form onSubmit={handleSubmit}>
-            <label htmlFor='firstName'>Name</label><input type='text' name='firstName' onChange={handleChange}></input>
-            <label htmlFor='lastName'>Quantity</label><input type='text' name='lastName' onChange={handleChange}></input>
-            <label htmlFor='city'>Price</label><input type='text' name='city' onChange={handleChange}></input>
+            <label htmlFor='firstName'>firstName</label><input type='text' name='firstName' onChange={handleChange}></input> <br />
+            <label htmlFor='lastName'>lastName</label><input type='text' name='lastName' onChange={handleChange}></input> <br />
+            <label htmlFor='city'>city</label><input type='text' name='city' onChange={handleChange}></input> <br />
             <button type='submit'>Create</button>
         </form>
     </div>

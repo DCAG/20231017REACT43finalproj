@@ -4,19 +4,19 @@ import ComboBox from './ComboBox'
 
 function ProductPicker({buttonShowText = 'Add', buttonSaveText = 'Save', pickCallback}) {
   const products = useSelector(store => store.products)
-  const [pickedProduct, setPickedProduct] = useState('')
+  const [pickedProductId, setPickedProductId] = useState('')
   const [displayPicker, setDisplayPicker] = useState(false)
   
   const pickProduct = () =>{
-    pickCallback(pickedProduct)
+    pickCallback(pickedProductId)
   }
 
   return (
     <div>
-        <button onClick={() => setDisplayPicker(prev => !prev)}>{buttonShowText}</button><br />
+        <button onClick={() => setDisplayPicker(prev => !prev)}>{displayPicker?'Hide':buttonShowText}</button><br />
         <div style={displayPicker?{}:{display:'none'}}>
-        <ComboBox options={products.map(p=>{return {value:p.id,display:p.name}})} onChange={(e)=>setPickedProduct(e.target.value)} />
-        <button onClick={pickProduct}>{buttonSaveText}</button>
+          <ComboBox options={products.map(p=>{return {value:`${p.id} | ${p.name}`,display:''}})} onChange={(e)=>setPickedProductId(e.target.value?.split('|')[0]?.trim())} />
+          <button onClick={pickProduct}>{buttonSaveText}</button>
         </div>
     </div>
   )

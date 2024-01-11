@@ -31,7 +31,7 @@ function EditCustomer() {
       <nav>
         <Link to='/'>Back</Link>
       </nav>
-      <h1>EditCustomer</h1>
+      <h1>Edit Customer</h1>
       First Name: <input type="text" name='firstName' onChange={handleChange} value={customer.firstName} /> <br />
       Last Name: <input type="text" name='lastName' onChange={handleChange} value={customer.lastName} /> <br />
       City: <input type="text" name='city' onChange={handleChange} value={customer.city} /> <br />
@@ -40,22 +40,23 @@ function EditCustomer() {
       <h3>List of purchased products:</h3>
       <ul>
         {
-          purchases.filter( (purchase, index) => {
+          purchases.filter(
             // purchases of this customer
-            return purchase.customerId === customerId &&
-            // get unique products purchases
-            purchases.findIndex(purchase2 => purchase.productId === purchase2.productId) === index
-          }).flatMap(
+            purchase => purchase.customerId === customerId
+          ).flatMap(
             // map customer purchases to product objects - to get their names
             purchase => products.filter(product => product.id === purchase.productId)
-            ).map( (product) => {
-              return (
-                <li key={product.id}>
-                    <Link to={'/products/' + product.id}>
-                      {product.name}
-                    </Link>
-                </li>
-              )
+          ).filter(
+            // get unique products
+            (product, index, self) => self.findIndex(product2 => product.id === product2.id) === index
+          ).map( (product) => {
+            return (
+              <li key={product.id}>
+                <Link to={'/products/' + product.id}>
+                  {product.name}
+                </Link>
+              </li>
+            )
           })
         }
       </ul>

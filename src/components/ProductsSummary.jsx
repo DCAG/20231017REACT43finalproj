@@ -6,7 +6,7 @@ function ProductsSummary() {
 
   return (
     <div>
-        <h3><b>{purchases.length}</b> of products were purchased</h3>
+      <h3>{purchases.length??'###'} products were purchased</h3>
     </div>
   )
 }

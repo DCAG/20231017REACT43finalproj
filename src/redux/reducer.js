@@ -1,28 +1,25 @@
+import {v4 as uuidv4} from 'uuid'
 
 const initState = {
     customers: [
-        //{id: uuidv4(), city: 'Miami', firstName: 'Amir', lastName: 'Granot'},
-        {id: '1234', city: 'Miami', firstName: 'Amir', lastName: 'Granot'},
-        //{id: uuidv4(), city: 'Cooper', firstName: 'Matan', lastName: 'Luzon'}
-        {id: '2345', city: 'Cooper', firstName: 'Matan', lastName: 'Luzon'}
+        {id: '6487fcfd-2e48-4e67-b7c6-4f35fb986956', city: 'Miami', firstName: 'Amir', lastName: 'Granot'},
+        {id: 'b27c9d63-6c5c-4ac0-b61b-c3fdbd67667d', city: 'Cooper', firstName: 'Matan', lastName: 'Luzon'}
     ],
     products: [
-        //{id: uuidv4(), name: 'Soap',price: 8, quantity: 50},
-        {id: '3456', name: 'Soap',price: 8, quantity: 50},
-        //{id: uuidv4(), name: 'Sponge',price: 2, quantity: 100}
-        {id: '4567', name: 'Sponge',price: 2, quantity: 100}
+        {id: '1', name: 'Soap',price: 8, quantity: 50},
+        {id: '2', name: 'Sponge',price: 2, quantity: 100}
     ],
+    productsLastId: 3, // the last id of products + 1
     purchases: [
-        //{id: uuidv4(), customerId: '', productId: '', timestamp: ''}
-        {id: 'abcd', customerId: '1234', productId: '3456', date: '2024-01-04'},
-        {id: 'bcde', customerId: '2345', productId: '4567', date: '2024-01-04'}
+        {id: 'a8298c74-a355-4caf-9086-61c167cd0f4d', customerId: '6487fcfd-2e48-4e67-b7c6-4f35fb986956', productId: '1', date: '2024-01-04'},
+        {id: '9cd5cf01-03bf-4537-ab0f-bee019e3eed3', customerId: 'b27c9d63-6c5c-4ac0-b61b-c3fdbd67667d', productId: '2', date: '2024-01-04'}
     ],
 }
 
 const rootReducer = (state = initState, action) => {
     switch(action.type){
         case 'PRODUCT_CREATE': // payload is a new object of product {name, quantity, price}
-            return {...state, products:[...state.products, {...action.payload, id: uuidv4()}]};
+            return {...state, productsNextId: productsNextId + 1, products:[...state.products, {...action.payload, id: state.productsNextId}]};
         case 'PRODUCT_UPDATE': // payload is a modified object of product {id, name, quantity, price}
             var products = [...state.products]
             var productIdx = products.findIndex((product) => {return product.id === action.payload.id})
@@ -39,6 +36,12 @@ const rootReducer = (state = initState, action) => {
             products[productIdx].quantity++
             return {...state, products};
         case 'PRODUCT_DELETE': // payload is productId
+            state.purchases.filter((purchase) => {
+                return purchase.productId === action.payload
+            }).forEach((purchase) => {
+                // remove all product purchases
+                state = rootReducer(state, {type:'PURCHASE_DELETE',payload:purchase.id})
+            })
             return {
                 ...state,
                 products: state.products.filter((item) => {

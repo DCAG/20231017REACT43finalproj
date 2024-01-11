@@ -32,34 +32,35 @@ function EditProduct() {
       <nav>
         <Link to='/'>Back</Link>
       </nav>
-      <h1>EditProduct</h1>
+      <h1>Edit Product</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor='name'>Name:</label><input type="text" name='name' onChange={handleChange} value={product.name} /> <br />
         <label htmlFor='price'>Price:</label><input type="number" name='price' onChange={handleChange} value={product.price} /> <br />
         <label htmlFor='quantity'>Quantity:</label><input type="number" name='quantity' onChange={handleChange} value={product.quantity} /> <br />
-        <input type="submit" name="PRODUCT_UPDATE" value ="Update" />
-        <input type="submit" name="PRODUCT_DELETE" value ="Delete" />
+        <button type="submit" name="PRODUCT_UPDATE">Update</button>
+        <button type="submit" name="PRODUCT_DELETE">Delete</button>
       </form>
       <br />
-      <h3>List of customers who baught this product:</h3>
+      <h3>List of customers who purchased this product:</h3>
       <ul>
         {
-          purchases.filter( (purchase, index) => {
+          purchases.filter(
             // purchases of this product
-            return purchase.productId === productId &&
-            // get unique customers purchases
-            purchases.findIndex(purchase2 => purchase.productId === purchase2.productId) === index
-          }).flatMap(
+            purchase => purchase.productId === productId
+          ).flatMap(
             // map customer purchases to product objects - to get their names
             purchase => customers.filter(customer => customer.id === purchase.customerId)
-            ).map( (customer) => {
-              return (
-                <li key={customer.id}>
-                  <Link to={'/customers/' + customer.id}>
-                    {customer.firstName} {customer.lastName}
-                  </Link>
-                </li>
-              )
+          ).filter(
+            // get unique customers
+            (customer, index, self) => self.findIndex(customer2 => customer.id === customer2.id) === index
+          ).map( (customer) => {
+            return (
+              <li key={customer.id}>
+                <Link to={'/customers/' + customer.id}>
+                  {customer.firstName} {customer.lastName}
+                </Link>
+              </li>
+            )
           })
         }
       </ul>
