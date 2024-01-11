@@ -40,7 +40,7 @@ function Purchases() {
       </nav>
       <h1>Purchases</h1>
       Products: <ComboBox options={products.map(item => {return {value:item.id, display:item.name}})} onChange={(e) => {setProductId(e.target.value)}} /> <br />
-      Customers: <ComboBox options={customers.map(item => {return {value:item.id, display:item.lastName+' '+item.firstName}})} onChange={(e) => {setCustomerId(e.target.value)}} /> <br />
+      Customers: <ComboBox options={customers.map(item => {return {value:item.id, display:item.firstName+' '+item.lastName}})} onChange={(e) => {setCustomerId(e.target.value)}} /> <br />
       Purchase Date: <input type='date' onChange={e => setDate(e.target.value)} /> <br />
       <button onClick={search}>Search</button>
       {
