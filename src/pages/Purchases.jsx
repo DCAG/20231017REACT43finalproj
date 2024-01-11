@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import ComboBox from '../components/ComboBox'
 import { useSelector } from 'react-redux'
@@ -62,7 +62,7 @@ function Purchases() {
                 // for each (the current customer's) purchase - paint a table row
                 (purchase, index) => {
                 return (
-                  <tr key={purchase.id}>
+                  <tr key={purchase.id} className='list-item--row'>
                     {
                       index === 0?(
                         <td rowSpan={customerPurchasesList.length}>
