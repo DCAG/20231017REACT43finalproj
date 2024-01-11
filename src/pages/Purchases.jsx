@@ -13,13 +13,7 @@ function Purchases() {
   const [purchasesGroupedByCustomer, setPurchasesGroupedByCustomer] = useState({})
 
   const search = () => {
-    console.log('Purchases: search')
-    console.log(date)
-    console.log(purchases)
-    console.log(customerId)
-    console.log(productId)
-    var result = 
-    purchases.filter(p => {
+    var result = purchases.filter(p => {
       return (customerId == '' || p.customerId === customerId) &&
       (productId == '' || p.productId === productId) && 
       (date == '' || p.date === date)
@@ -36,15 +30,14 @@ function Purchases() {
         }
     })
     result = Object.groupBy(result,({customerId}) => customerId)  
-    console.log(result)
     setPurchasesGroupedByCustomer({...result})
-    console.log(Object.keys(purchasesGroupedByCustomer))
-    console.log(purchasesGroupedByCustomer[Object.keys(purchasesGroupedByCustomer)[0]])
   }
 
   return (
     <div>
-      <Link to='/'>Back</Link>
+      <nav>
+        <Link to='/'>Back</Link>
+      </nav>
       <h1>Purchases</h1>
       Products: <ComboBox options={products.map(item => {return {value:item.id, display:item.name}})} onChange={(e) => {setProductId(e.target.value)}} /> <br />
       Customers: <ComboBox options={customers.map(item => {return {value:item.id, display:item.lastName+' '+item.firstName}})} onChange={(e) => {setCustomerId(e.target.value)}} /> <br />
@@ -61,15 +54,18 @@ function Purchases() {
           </thead>
           <tbody style={{verticalAlign:'top'}}>
           {
-            Object.keys(purchasesGroupedByCustomer).map( key => { 
-              console.log(purchasesGroupedByCustomer)
-              console.log(key)
-              return purchasesGroupedByCustomer[key]?.map( (purchase,index) => {
+            Object.keys(purchasesGroupedByCustomer).map(
+              // for each customer
+              customerId => {
+              const customerPurchasesList = purchasesGroupedByCustomer[customerId] 
+              return customerPurchasesList.map(
+                // for each (the current customer's) purchase - paint a table row
+                (purchase, index) => {
                 return (
                   <tr key={purchase.id}>
                     {
                       index === 0?(
-                        <td rowSpan={purchasesGroupedByCustomer[key].length}>
+                        <td rowSpan={customerPurchasesList.length}>
                           {purchase.customerFullName}
                         </td>
                       ):''
@@ -84,34 +80,6 @@ function Purchases() {
           </tbody>
         </table>
       }
-      {/*
-        customers.filter( c => customerId == '' || c.id === customerId).map(customer => {
-          return (
-            <div key={customer.id} className='list-item--row'>
-              <h3>{customer.firstName} {customer.lastName}</h3>
-              
-              <ul style={{margin:'0'}}>
-              {
-                purchases.filter(
-                  purchase => purchase.customerId === customer.id &&
-                  productId == '' || purchase.productId === productId &&
-                  date == '' || purchase.date === date
-                ).map(
-                  (purchase) => {
-                    return (
-                      <li key={purchase.id} style={{display:'flex', justifyContent:'space-between'}}>
-                        <span>{products.find(product => product.id === purchase.productId).name??''}</span>
-                        <span>{purchase.date}</span>
-                      </li>
-                    )
-                  }
-                )
-              }
-              </ul>
-            </div>
-          )
-        })
-      */}
     </div>
   )
 }

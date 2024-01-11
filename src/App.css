@@ -14,7 +14,7 @@
 }
 
 .flex-container > a {
-  background-color: gray;
+  background-color: lightgray;
   margin: 10px;
   text-align: center;
   line-height: 75px;
@@ -32,8 +32,8 @@ input {
 button {
 
   /* remove default behavior */
-  appearance:none;
   -webkit-appearance:none;
+  appearance:none;
 
   /* usual styles */
   padding:5px;

@@ -6,14 +6,15 @@ const initState = {
         {id: 'b27c9d63-6c5c-4ac0-b61b-c3fdbd67667d', city: 'Cooper', firstName: 'Matan', lastName: 'Luzon'}
     ],
     products: [
-        {id: '1', name: 'Soap',price: 8, quantity: 50},
-        {id: '2', name: 'Sponge',price: 2, quantity: 100}
+        {id: '1', name: 'Yacht',price: 8, quantity: 50},
+        {id: '2', name: 'Tesla',price: 2, quantity: 100}
     ],
     productsLastId: 3, // the last id of products + 1
     purchases: [
-        {id: 'a8298c74-a355-4caf-9086-61c167cd0f4d', customerId: '6487fcfd-2e48-4e67-b7c6-4f35fb986956', productId: '1', date: '2024-01-04'},
-        {id: '9cd5cf01-03bf-4537-ab0f-bee019e3eed3', customerId: 'b27c9d63-6c5c-4ac0-b61b-c3fdbd67667d', productId: '2', date: '2024-01-04'}
+        //{id: 'a8298c74-a355-4caf-9086-61c167cd0f4d', customerId: '6487fcfd-2e48-4e67-b7c6-4f35fb986956', productId: '1', date: '2024-01-04'},
+        //{id: '9cd5cf01-03bf-4537-ab0f-bee019e3eed3', customerId: 'b27c9d63-6c5c-4ac0-b61b-c3fdbd67667d', productId: '2', date: '2024-01-04'}
     ],
+    error: undefined
 }
 
 const rootReducer = (state = initState, action) => {
@@ -28,8 +29,15 @@ const rootReducer = (state = initState, action) => {
         case 'PRODUCT_DEC_QUANTITY': // payload is productId
             var products = [...state.products]
             var productIdx = products.findIndex((product) => {return product.id === action.payload})
-            products[productIdx].quantity--
-            return {...state, products};
+            if(products[productIdx].quantity === 0){
+                const error = {errorMessage: "product quantity cannot be lower than 0", type: action.type, payload: action.payload}
+                state = {...state, error}
+            }
+            else{
+                products[productIdx].quantity--
+                state = {...state, products}
+            }
+            return state;
         case 'PRODUCT_INC_QUANTITY': // payload is productId
             var products = [...state.products]
             var productIdx = products.findIndex((product) => {return product.id === action.payload})
@@ -49,7 +57,16 @@ const rootReducer = (state = initState, action) => {
                 })
             }
         case 'PURCHASE_CREATE': // payload is a new object of customer {productId, customerId}
+            if(action.payload.productId == '' || action.payload.customerId == ''){
+                console.warn('productId or customerId were missing in PURCHASE_CREATE redux reducer call',action.payload)
+                return state
+            }
             state = rootReducer(state,{type:'PRODUCT_DEC_QUANTITY',payload:action.payload.productId})
+            if(state.error){
+                console.warn('cannot purchase product',action,state.error)
+                state.error = undefined
+                return state
+            }
             return {
                 ...state,
                 purchases: [

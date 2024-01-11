@@ -34,9 +34,9 @@ function EditProduct() {
       </nav>
       <h1>Edit Product</h1>
       <form onSubmit={handleSubmit}>
-        <label htmlFor='name'>Name:</label><input type="text" name='name' onChange={handleChange} value={product.name} /> <br />
-        <label htmlFor='price'>Price:</label><input type="number" name='price' onChange={handleChange} value={product.price} /> <br />
-        <label htmlFor='quantity'>Quantity:</label><input type="number" name='quantity' onChange={handleChange} value={product.quantity} /> <br />
+        <label htmlFor='name'>Name:</label><input type="text" id='name' name='name' onChange={handleChange} value={product.name} /> <br />
+        <label htmlFor='price'>Price:</label><input type="number" id='price' name='price' onChange={handleChange} value={product.price} /> <br />
+        <label htmlFor='quantity'>Quantity:</label><input type="number" id='quantity' name='quantity' onChange={handleChange} value={product.quantity} /> <br />
         <button type="submit" name="PRODUCT_UPDATE">Update</button>
         <button type="submit" name="PRODUCT_DELETE">Delete</button>
       </form>

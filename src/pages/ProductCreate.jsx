@@ -20,9 +20,9 @@ function ProductCreate() {
     <div>
         <h3>Create New Product</h3>
         <form onSubmit={handleSubmit}>
-            <label htmlFor='name'>Name</label> <input type='text' name='name' onChange={handleChange}></input> <br />
-            <label htmlFor='quantity'>Quantity</label> <input type='number' name='quantity' onChange={handleChange}></input> <br />
-            <label htmlFor='price'>Price</label> <input type='number' name='price' onChange={handleChange}></input> <br />
+            <label htmlFor='name'>Name</label> <input type='text' id='name' name='name' onChange={handleChange}></input> <br />
+            <label htmlFor='quantity'>Quantity</label> <input type='number' id='quantity' name='quantity' onChange={handleChange}></input> <br />
+            <label htmlFor='price'>Price</label> <input type='number' id='price' name='price' onChange={handleChange}></input> <br />
             <button type='submit'>Create</button>
         </form>
     </div>
